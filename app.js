@@ -14,5 +14,5 @@ app.use("/", require("./routes/index.js"));
 
 // サーバを起動させる
 app.listen(PORT, () => {
-  console.timeLog(`Application listening at ${PORT}`);
+  console.log(`Application listening at ${PORT}`);
 });
