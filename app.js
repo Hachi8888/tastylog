@@ -1,5 +1,7 @@
 const PORT = process.env.PORT;
+const path = require("path");
 const express = require("express");
+const favicon = require("serve-favicon");
 const app = express();
 
 // app.get("/", (req, res) => {
@@ -9,7 +11,11 @@ const app = express();
 // expressでejsを利用する設定
 app.set("view engine", "ejs");
 
-// ルーティングを行う
+// 静定期コンテンツの配信（Static resource rooting）
+app.use(favicon(path.join(__dirname, "/public/favicon.ico")));
+app.use("/public", express.static(path.join(__dirname, "/public")));
+
+// 動的コンテンツのルーティング（Dynamic resource rooting）
 app.use("/", require("./routes/index.js"));
 
 // サーバを起動させる
