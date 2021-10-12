@@ -1,5 +1,6 @@
 const PORT = process.env.PORT;
 const path = require("path");
+const logger = require("./lib/log/logger.js");
 const express = require("express");
 const favicon = require("serve-favicon");
 const app = express();
@@ -23,5 +24,5 @@ app.use("/", require("./routes/index.js"));
 
 // サーバを起動させる
 app.listen(PORT, () => {
-  console.log(`Application listening at ${PORT}`);
+  logger.console.info(`Application listening at ${PORT}`);
 });
