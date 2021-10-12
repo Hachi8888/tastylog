@@ -10,6 +10,9 @@ const app = express();
 
 // expressでejsを利用する設定
 app.set("view engine", "ejs");
+// サーバー情報を隠蔽する
+app.disable("x-powered-by");
+
 
 // 静定期コンテンツの配信（Static resource rooting）
 app.use(favicon(path.join(__dirname, "/public/favicon.ico")));
