@@ -34,7 +34,8 @@ app.use("/test", async(req, res, next) => {
 
   try {
     await MySQLClient.connect();
-    data = await MySQLClient.query(await sql("SELECT_SHOP_BASIC_BY_ID")); // sqlが実行され、その戻り値が返ってくる
+    // sqlが実行され、その戻り値が返ってくる, バインド変数も利用する
+    data = await MySQLClient.query(await sql("SELECT_SHOP_BASIC_BY_ID"), [1]);
     console.log(data);
   } catch (err) {
     next(err)
