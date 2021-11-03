@@ -29,39 +29,18 @@ app.use(accesslogger());
 // 動的コンテンツのルーティング（Dynamic resource rooting）
 app.use("/", require("./routes/index.js"));
 app.use("/test", async(req, res, next) => {
-  const { promisify } = require("util");  // 非同期化するメソッド
-  const path = require("path");
-  const { sql } = require("@garafu/mysql-fileloader")({ root: path.join(__dirname, "./lib/database/sql") });
-  const config = require("./config/mysql.config.js");
-  const mysql = require("mysql");
-
-  // mysqlに接続する設定
-  const con = mysql.createConnection({
-    host: config.HOST,
-    port: config.PORT,
-    user: config.USERNAME,
-    password: config.PASSWORD,
-    database: config.DATABASE
-  });
-
-  // 非同期関数を作る
-  const client = {
-    connect: promisify(con.connect).bind(con), // 非同期関数にし、元データをbindで書き換える
-    query: promisify(con.query).bind(con),
-    end: promisify(con.end).bind(con),
-  }
-
+  const { MySQLClient, sql } = require("./lib/database/client.js");
   var data;
 
   try {
-    await client.connect();
-    data = await client.query(await sql("SELECT_SHOP_BASIC_BY_ID")); // sqlが実行され、その戻り値が返ってくる
+    await MySQLClient.connect();
+    data = await MySQLClient.query(await sql("SELECT_SHOP_BASIC_BY_ID")); // sqlが実行され、その戻り値が返ってくる
     console.log(data);
   } catch (err) {
     next(err)
   } finally {
     // 接続を切断する
-    await client.end();
+    await MySQLClient.end();
   }
 
   res.end("OK~");  
