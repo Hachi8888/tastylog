@@ -9,15 +9,11 @@ const { connect } = require("http2");
 const { ADDRGETNETWORKPARAMS } = require("dns");
 const app = express();
 
-// app.get("/", (req, res) => {
-//   res.end("Hello World");
-// });
-
 // expressでejsを利用する設定
 app.set("view engine", "ejs");
 // サーバー情報を隠蔽する
 app.disable("x-powered-by");
-6
+
 // 静定期コンテンツの配信（Static resource rooting）
 app.use(favicon(path.join(__dirname, "/public/favicon.ico")));
 app.use("/public", express.static(path.join(__dirname, "/public")));
@@ -33,15 +29,11 @@ app.use("/test", async(req, res, next) => {
   var data;
 
   try {
-    await MySQLClient.connect();
-    // sqlが実行され、その戻り値が返ってくる, バインド変数も利用する
-    data = await MySQLClient.query(await sql("SELECT_SHOP_BASIC_BY_ID"), [1]);
+    // poolを利用することで、connectionに繋がなくてもよい(いきなりqueryを投げられる)、finallyでendで解放しなくても良くなる
+    data = await MySQLClient.executeQuery(await sql("SELECT_SHOP_BASIC_BY_ID"), [1]);
     console.log(data);
   } catch (err) {
     next(err)
-  } finally {
-    // 接続を切断する
-    await MySQLClient.end();
   }
 
   res.end("OK~");  
