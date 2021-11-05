@@ -14,6 +14,13 @@ app.set("view engine", "ejs");
 // サーバー情報を隠蔽する
 app.disable("x-powered-by");
 
+// Expose global mathod to view engine（）
+app.use((req, res, next) => {
+  res.locals.moment = require("moment");
+  res.locals.padding = require("./lib/math/math").padding;
+  next();
+});
+
 // 静定期コンテンツの配信（Static resource rooting）
 app.use(favicon(path.join(__dirname, "/public/favicon.ico")));
 app.use("/public", express.static(path.join(__dirname, "/public")));
