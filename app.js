@@ -30,21 +30,8 @@ app.use("/public", express.static(path.join(__dirname, "/public")));
 app.use(accesslogger());
 
 // 動的コンテンツのルーティング（Dynamic resource rooting）
+app.use("/shops", require("./routes/shops.js"));
 app.use("/", require("./routes/index.js"));
-app.use("/test", async(req, res, next) => {
-  const { MySQLClient, sql } = require("./lib/database/client.js");
-  var data;
-
-  try {
-    // poolを利用することで、connectionに繋がなくてもよい(いきなりqueryを投げられる)、finallyでendで解放しなくても良くなる
-    data = await MySQLClient.executeQuery(await sql("SELECT_SHOP_BASIC_BY_ID"), [1]);
-    console.log(data);
-  } catch (err) {
-    next(err)
-  }
-
-  res.end("OK~");  
-});
 
 // Set application log（ミドルウェアの読み込み）
 app.use(applicationlogger());
