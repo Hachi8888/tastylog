@@ -14,7 +14,7 @@ router.get("/:id" , async (req, res, next) => {
     res.render("./shops/index.ejs", data);
   }).catch((err) => {
     next(err);
-  })
+  });
 });
 
 module.exports = router;
