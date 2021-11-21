@@ -30,6 +30,7 @@ app.use("/public", express.static(path.join(__dirname, "/public")));
 app.use(accesslogger());
 
 // 動的コンテンツのルーティング（Dynamic resource rooting）
+app.use("/search", require("./routes/search"));
 app.use("/shops", require("./routes/shops.js"));
 app.use("/", require("./routes/index.js"));
 
