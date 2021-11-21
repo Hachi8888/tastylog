@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="outerframe">
-    <%- include("./_share/navbar.ejs")  %> 
+    <%- include("../_share/navbar.ejs")  %> 
     <main class="container">
       <div class="border-bottom mt-5 mb-5">
         <h1 class="display-4"><%= name %></h1>
@@ -20,11 +20,70 @@
         </p>
       </div>
 
-      <div><img class="img-fluid" src="/public/images/dummy/1150x250.png">
+      <div>
+        <img class="img-fluid" src="/public/images/dummy/1150x250.png">
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+        <h2 class="border-bottom md-5 mb-2"><i class="fa fa-fw fa-book"></i>店舗情報</h2>
+        <!-- table>(tr>th+td)*7 で構造を表現できる -->
+        <table class="table table-bordered">
+          <colgroup>
+            <col class="bg-light" style="width: 10rem">
+          </colgroup>
+        <tr>
+          <th>店名</th>
+          <td><%= name %></td>
+        </tr>
+        <tr>
+          <th>カテゴリ</th>
+          <td><%= categories %></td>
+        </tr>
+        <tr>
+          <th>電話</th>
+          <td><%= tel %></td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td>
+            <div><%= address %></div>
+            <div id="mapid"></div>
+          </td>
+        </tr>
+        <tr>
+          <th>定休日</th>
+          <td><%= holiday %></td>
+        </tr>
+        <tr>
+          <th>座席数</th>
+          <td><%= seats %></td>
+        </tr>
+        <tr>
+          <th>価格帯</th>
+          <td><%= price_range %></td>
+        </tr>
+      </table> 
+      <div>
+        <div class="position-relative">
+          <h2 class="border-bootom mt-5 mb-5 pb-2"><i class="fa fa-fw fa-comments"></i>口コミ</h2>
+          <div class="position-absolute" style="right:0; top:0;">
+            <a class="btn btn-outline-success" href="#">投稿する</a>
+          </div>
+        </div>
+        <div>
+          <!-- shop review -->
+        </div>
+      </div>
+      </div>
+        <div class="col-md-4">
+          <h2 class="border-bottom mt-5 mb-5 pb-2"><i class="fa fa-fw fa-heart"></i>おすすめのお店</h2>
+          <!-- Recommends  -->
+        </div>
       </div>
     </main>
-    <%- include("./_share/footer.ejs") %> 
+    <%- include("../_share/footer.ejs") %> 
   </div>
-  <%- include("./_share/javascripts.ejs") %>
+  <%- include("../_share/javascripts.ejs") %>
 </body>
 </html>
