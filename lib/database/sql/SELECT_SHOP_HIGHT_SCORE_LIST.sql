@@ -15,7 +15,7 @@ FROM
   FROM
   (
     SELECT * FROM t_shop ORDER BY score LIMIT ?
-  ) as t_shop
+  ) as shop
   LEFT JOIN t_shop_category ON shop.id = t_shop_category.shop_id
 ) as shop_category
 LEFT JOIN m_category ON shop_category.category_id = m_category.id
