@@ -23,7 +23,10 @@ router.get("/", async (req, res, next) => {
       )
     }
 
-    res.render("./search/list.ejs", { results });
+    res.render("./search/list.ejs", { 
+      keyword,
+      results 
+    });
   } catch (err) {
     next(err);
   }
