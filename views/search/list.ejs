@@ -9,25 +9,37 @@
 <body>
   <div class="outerframe">
     <%- include("../_share/navbar.ejs")  %>
-  <main role="=main" class="container">
-  <div class="border-bottom">
-    <form action="/search" method="get" class="me-5 mb-5">
-      <div class="form-group row justify-content-center">
-        <div class="input-group mt-3 mb-3 col-sm-8">
-          <input type="text" class="form-controle" id="keyword" name="keyword" value="<%= keyword %>" autofocus>
-          <div class="input-group-append">
-            <button class="btn btn-secondary" type="submit"><i class="fa fa-fw fa-search"></i></button>
+    <main role="=main" class="container">
+      <div class="border-bottom">
+        <form action="/search" method="get" class="me-5 mb-5">
+          <div class="form-group row justify-content-center">
+            <div class="input-group mt-3 mb-3 col-sm-8">
+              <input type="text" class="form-controle" id="keyword" name="keyword" value="<%= keyword %>" autofocus>
+              <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit"><i class="fa fa-fw fa-search"></i></button>
+              </div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
-  </div>
 
-  </main>
-  <%- include("../_share/footer.ejs") %> 
+      <div class="card-columns mt-5">
+        <% for (var item of results)  { %>
+        <%- include("./item.ejs", item) %>
+        <% } %>
+      </div>
+
+      <nav>
+        <ul class="pagination justify-content-center">
+          <!-- Pagenation -->
+        </ul>
+      </nav>
+    </main>
+
+    <%- include("../_share/footer.ejs") %> 
+
   </div>
 <!-- </div> -->
 <%- include("../_share/javascripts.ejs") %>
-  <!-- <%= JSON.stringify(locals.results) %> -->
 </body>
 </html>
