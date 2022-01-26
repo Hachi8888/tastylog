@@ -14,12 +14,8 @@ FROM
     *
   FROM
   (
-    SELECT * FROM t_shop ORDER BY score LIMIT ?
-<<<<<<< HEAD
+    SELECT * FROM t_shop ORDER BY score DESC LIMIT ?
   ) as shop
-=======
-  ) as t_shop
->>>>>>> e5e137a9cd920c624fb37ab5912eae101630593c
   LEFT JOIN t_shop_category ON shop.id = t_shop_category.shop_id
 ) as shop_category
 LEFT JOIN m_category ON shop_category.category_id = m_category.id

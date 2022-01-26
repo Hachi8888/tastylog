@@ -14,13 +14,13 @@ router.get("/", async (req, res, next) => {
           `%${keyword}`,
           MAX_ITEMS
         ]
-      )
+      );
     } else {
       // keywordがなければ初期表示（ハイスコア店舗表示）
       results = await MySQLClient.executeQuery(
-        await sql("SELECT_SHOP_HIGHT_SCORE_LIST"),
+        await sql("SELECT_SHOP_HIGH_SCORE_LIST"),
         [MAX_ITEMS]
-      )
+      );
     }
 
     res.render("./search/list.ejs", { 
