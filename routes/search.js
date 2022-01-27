@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
       results = await MySQLClient.executeQuery(
         await sql("SELECT_SHOP_LIST_BY_NAME"),
         [
-          `%${keyword}`,
+          `%${keyword}%`,
           MAX_ITEMS
         ]
       );
@@ -23,10 +23,11 @@ router.get("/", async (req, res, next) => {
       );
     }
 
-    res.render("./search/list.ejs", { 
-      keyword,
-      results 
-    });
+    // res.render("./search/list.ejs", { 
+    //   keyword,
+    //   results 
+    // });
+    res.render("./search/list.ejs", { results });
   } catch (err) {
     next(err);
   }
