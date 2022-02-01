@@ -33,8 +33,9 @@
         <ul class="pagination justify-content-center">
           <% for (var i = 1; i <= pagenation.max; i++) { %>
             <% if (pahenation.current !== i) { %>
-              <li class="page-item"><a href="" class="page-link"></a></li>
+              <li class="page-item"><a href="/search/?keyword=<%= keyword %>&page=<%= i %>" class="page-link"><%= i %></a></li>
             <% }  else { %>
+              <li class="page-item active"><span class="page-link disable"><%= i %></span></li>
             <% } %>
           <% } %>
         </ul>
