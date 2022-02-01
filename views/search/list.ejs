@@ -31,7 +31,12 @@
 
       <nav>
         <ul class="pagination justify-content-center">
-          <!-- Pagenation -->
+          <% for (var i = 1; i <= pagenation.max; i++) { %>
+            <% if (pahenation.current !== i) { %>
+              <li class="page-item"><a href="" class="page-link"></a></li>
+            <% }  else { %>
+            <% } %>
+          <% } %>
         </ul>
       </nav>
     </main>
