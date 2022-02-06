@@ -13,7 +13,7 @@ router.get("/regist/:shopId(\\d+)", async (req, res, next) => {
     shop = results[0] || {};
     shopName = shop.name;
     review = {};
-    res.render("./account/reviews/regist-form.ejs", [shopId, shopName, review]);
+    res.render("./account/reviews/regist-form.ejs", { shopId, shopName, review });
   } catch (err) {
     next(err);
   }
