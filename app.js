@@ -29,6 +29,10 @@ app.use("/public", express.static(path.join(__dirname, "/public")));
 // (JSは上から順に実行される。静的コンテンツまでログ出力する必要はないため、その記述の直後に書くのがおすすめ)
 app.use(accesslogger());
 
+// Set middleware
+// postのリクエスト（formで渡されるデータ）を読み解けるようにする（formで渡されるデータ）
+app.use(express.urlencoded({ extend: true }));
+
 // 動的コンテンツのルーティング（Dynamic resource rooting）
 app.use("/account", require("./routes/account.js"));
 app.use("/search", require("./routes/search.js"));
