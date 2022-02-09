@@ -1,14 +1,18 @@
 const router = require("express").Router();
 const { MySQLClient, sql } = require("../lib/database/client.js");
+const moment = require("moment");
+const DATE_FORMAT = "YYYY/MM/DD";
 
 var createReviewData = function (req) {
+  var body = req.body, date;
+
   return {
-    shopId,
-    shopName,
-    visit,
-    score,
-    
-  }
+    shopId: req.params.shopId,
+    score: parseFloat(body.score),
+    visit: (date = moment(body.visit, DATE_FORMAT) && date.isValid() ?  date.toDate() : null),
+    post: new Date(),
+    description: body.description,
+  };
 };
 
 router.get("/regist/:shopId(\\d+)", async (req, res, next) => {
