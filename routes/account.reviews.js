@@ -9,7 +9,7 @@ var createReviewData = function (req) {
   return {
     shopId: req.params.shopId,
     score: parseFloat(body.score),
-    visit: (date = moment(body.visit, DATE_FORMAT) && date.isValid() ?  date.toDate() : null),
+    visit: (date = moment(body.visit, DATE_FORMAT)) && date.isValid() ?  date.toDate() : null,
     post: new Date(),
     description: body.description,
   };
