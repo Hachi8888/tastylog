@@ -9,7 +9,7 @@ var createReviewData = function (req) {
   return {
     shopId: req.params.shopId,
     score: parseFloat(body.score),
-    visit: (date = moment(body.visit, DATE_FORMAT)) && date.isValid() ?  date.toDate() : null,
+    visit: (date = moment(body.visit, DATE_FORMAT)) && date.isValid() ? date.toDate() : null,
     post: new Date(),
     description: body.description,
   };
@@ -33,10 +33,10 @@ router.get("/regist/:shopId(\\d+)", async (req, res, next) => {
   }
 });
 
-router.post("/regist/confirm", (res, req, next) => {
+router.post("/regist/confirm", (req, res) => {
   var review = createReviewData(req);
-  var { shopId, shopName } = res.body;
-  res.render("./account/reviews/regist-confirm.ejs", { shopId, shopName, review })
+  var { shopId, shopName } = req.body;
+  res.render("./account/reviews/regist-confirm.ejs", { shopId, shopName, review });
 });
 
 module.exports = router;
