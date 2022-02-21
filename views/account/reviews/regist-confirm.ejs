@@ -47,8 +47,8 @@
           <div class="form-group row">
             <div class="col-sm-2"></div>
             <div class="col-sm-10">
-              <input type="submit" class="btn btn-primary" value="修正" />
-              <input type="submit" class="btn btn-primary" value="登録" />
+              <input type="submit" class="btn btn-primary" data-action="/account/reviews/regist/<%= shopId %>" data-method="POST" value="修正" />
+              <input type="submit" class="btn btn-primary" data-action="/account/reviews/regist/execute" data-method="POST" value="登録" />
             </div>
           </div>
 
@@ -58,5 +58,6 @@
     <%- include("../../_share/footer.ejs") %> 
   </div>
   <%- include("../../_share/javascripts.ejs") %> 
+  <script src="/public/javascripts/regist.js"></script>
 </body>
 </html>
