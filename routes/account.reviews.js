@@ -3,6 +3,22 @@ const { MySQLClient, sql } = require("../lib/database/client.js");
 const moment = require("moment");
 const DATE_FORMAT = "YYYY/MM/DD";
 
+var validateReviewData = function (req) {
+  var body = req.body;
+  var isValid = true, error = {};
+
+  if (body.visit && !moment(body.visit).isValid()) {
+    isValid = false;
+    error.visit = "訪問日の日付文字列が不正です。";
+  }
+
+  if (isValid) {
+    return undefined;
+  }
+
+  return error;
+};
+
 var createReviewData = function (req) {
   var body = req.body, date;
 
@@ -40,8 +56,15 @@ router.post("/regist/:shopId(\\d+)", (req, res) => {
 });
 
 router.post("/regist/confirm", (req, res) => {
+  var error = validateReviewData(req);
   var review = createReviewData(req);
   var { shopId, shopName } = req.body;
+
+if (error) {
+  res.render("./account/reviews/regist-form.ejs", { error, shopId, shopName, review });
+  return;
+}
+
   res.render("./account/reviews/regist-confirm.ejs", { shopId, shopName, review });
 });
 
