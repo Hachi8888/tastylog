@@ -4,7 +4,7 @@
     <div class="card-body">
       <h5 class="card-title"><%= name %></h5>
       <p class="card-text"><%= categories %></p>
-      <p class="card-text"><span class="rate-star" style="--rate: <% (score/5.00)*100 %>%;"></span><% padding(score) %></p>
+      <p class="card-text"><span class="rate-star" style="--rate: <%= (score/5.00)*100 %>%;"></span><%= padding(score) %></p>
     </div>
 </a>
 </div>

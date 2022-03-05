@@ -13,7 +13,7 @@
             <p class="card-text text-muted">
               <small>
                 訪問日： <%= visit ? moment(visit).format("YYYY/MM/DD") : "-" %>
-                <span class="rate-star" style="--rate: <%= (score/5.00)*100 %>%;"></span> <%= padding(score) %>
+                <span class="rate-star" style="--rate: <%= (score/5.00)*100 %>%;"></span><%= padding(score) %>
               </small>
             </p>
           </div>
