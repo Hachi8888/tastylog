@@ -26,16 +26,11 @@ app.use("/public", express.static(path.join(__dirname, "/public")));
 
 //Set access log（ミドルウェアの読み込み）
 // (JSは上から順に実行される。静的コンテンツまでログ出力する必要はないため、その記述の直後に書くのがおすすめ)
-app.use(cookie());
 app.use(accesslogger());
-app.use((req, res, next) => {
-  console.log(req.cookies.message);
-  res.cookie("message", "Hello world!"); // クッキーの保存
-  next(); // ミドルウェアにするのでnextは必ず呼ぶ
-});
 
 // Set middleware
 // postのリクエスト（formで渡されるデータ）を読み解けるようにする（formで渡されるデータ）
+app.use(cookie());
 app.use(express.urlencoded({ extend: true }));
 
 // 動的コンテンツのルーティング（Dynamic resource rooting）
