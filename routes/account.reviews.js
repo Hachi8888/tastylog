@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { MySQLClient, sql } = require("../lib/database/client.js");
 const moment = require("moment");
+const tokens = new (require("csrf"))();
 const DATE_FORMAT = "YYYY/MM/DD";
 
 var validateReviewData = function (req) {
@@ -31,9 +32,17 @@ var createReviewData = function (req) {
   };
 };
 
+// 入力フォームの表示
 router.get("/regist/:shopId(\\d+)", async (req, res, next) => {
   var shopId =req.params.shopId;
-  var shop, shopName, review, results;
+  var secret, token, shop, shopName, review, results;
+
+  // secret, tokenの発行
+  secret = await tokens.secret(); // secret()メソッドは非同期でcallbackでsecretを取得している
+  token = tokens.create(secret);
+  // 保存
+  req.session._csrf = secret; // secretはサーバー保持（session）
+  res.cookie("_csrf", token); // tokenはクライアント返却（cookie）
 
   try {
     results = await MySQLClient.executeQuery(
@@ -70,6 +79,16 @@ if (error) {
 
 // sqlの実行があるので非同期で行う
 router.post("/regist/execute", async (req, res, next) => {
+  // CSRF対策のため真っ先にtokenの確認を行う
+  var secret = req.session._csrf; // secretの取り出し
+  var token = req.cookies._csrf;  // tokenの取り出し
+
+  if (tokens.verify(secret, token) === false) {
+    // 不正な画面遷移
+    next(new Error("Invalid Token."));
+    return;
+  }
+
   var error = validateReviewData(req);
   var review = createReviewData(req);
   var { shopId, shopName } = req.body;
@@ -101,6 +120,10 @@ router.post("/regist/execute", async (req, res, next) => {
     next(err);
     return;
   }
+
+  // 正常な画面遷移だった場合、安全のためtokenを削除する
+  delete req.session._csrf;
+  res.clearCookie("_csrf");
 
   res.render("./account/reviews/regist-complete.ejs", { shopId });
 });
