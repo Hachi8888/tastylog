@@ -4,11 +4,13 @@ const path = require("path");
 const logger = require("./lib/log/logger.js");
 const accesslogger = require("./lib/log/accesslogger.js");
 const applicationlogger = require("./lib/log/applicationlogger.js");
+const accesscontrole = require("./lib/security/accesscontrol.js");
 const express = require("express");
 const favicon = require("serve-favicon");
 const cookie = require("cookie-parser");
 const session = require("express-session");
 const MYSQLSession = require("express-mysql-session")(session);
+const flash = require("connect-flash");  // エラーメッセージを画面に表示させるツール
 const app = express();
 
 // expressでejsを利用する設定
@@ -48,6 +50,8 @@ app.use(session({
   name: "sid" // session name
 })); // sessionはcookieを前提にしているので、cookieの下に設定する
 app.use(express.urlencoded({ extend: true }));
+app.use(flash());
+app.use(...accesscontrole.initialize()); //スプレッド演算子によって、initialize()で帰る配列の要素が各引数に展開されて設定される
 
 // 動的コンテンツのルーティング（Dynamic resource rooting）
 app.use("/account", require("./routes/account.js"));
