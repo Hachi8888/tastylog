@@ -31,10 +31,9 @@ router.get("/login", (req, res) => {
 // router.post("/login", authenticate());
 // router.post("/login", (req, res) => {
 //   authenticate();
-//   // console.log(`---------> ${JSON.stringify(decycle(req), null, 2)}`);
+//   console.log(`---------> ${JSON.stringify(decycle(req), null, 2)}`);
 // });
 
-router.post("/login", authenticate());
 
 router.use("/reviews", require("./account.reviews.js"));
 
